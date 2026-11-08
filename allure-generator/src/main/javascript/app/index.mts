@@ -4,11 +4,13 @@ import translate from "../helpers/t.mts";
 import { createApp } from "./bootstrap.mts";
 import ErrorLayout from "./ErrorLayout.mts";
 
-const { App, notFound, showView } = createApp({
+// const { App, notFound, showView } = createApp({
+const { App } = createApp({
   registerTabRoutes,
   createNotFoundView: () => ErrorLayout({ code: 401, message: translate("errors.notFound") }),
   createTestResultLayout: (uid, tabName) =>
     TestResultLayout({ uid, tabName: tabName || undefined }),
 });
 
-export { App, notFound, showView };
+// export { App, notFound, showView };
+export { App };

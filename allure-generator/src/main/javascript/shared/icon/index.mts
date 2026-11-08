@@ -189,7 +189,7 @@ export type IconRenderOptions = {
   title?: string;
 };
 
-export const renderIcon = (
+const renderIcon = (
   name: IconName,
   {
     attributes = {},

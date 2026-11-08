@@ -19,7 +19,7 @@ type RuntimeWidgetDescriptor = import("./types.mts").RuntimeWidgetDescriptor;
 type TabDescriptor = import("./types.mts").TabDescriptor;
 type TestResultBlockPosition = import("./types.mts").TestResultBlockPosition;
 type TestResultBlocks = import("./types.mts").TestResultBlocks;
-type WidgetDescriptor = import("./types.mts").WidgetDescriptor;
+// type WidgetDescriptor = import("./types.mts").WidgetDescriptor;
 type WidgetsByTab = import("./types.mts").WidgetsByTab;
 type AppRouter = Pick<typeof import("../routing/router.mts").default, "route">;
 
@@ -82,4 +82,4 @@ export const registerTabRoutes = ({ notFound, router, showView }: RegisterTabRou
   });
 };
 
-export type { WidgetDescriptor };
+// export type { WidgetDescriptor };

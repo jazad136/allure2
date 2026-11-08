@@ -112,14 +112,14 @@ export async function initTranslations() {
   gtag("init_language", { language: language || "en" });
 }
 
-export function addTranslation(lang: LanguageId, json: TranslationBundle) {
-  resources[lang] = { [DEFAULT_NAMESPACE]: json };
+// export function addTranslation(lang: LanguageId, json: TranslationBundle) {
+//   resources[lang] = { [DEFAULT_NAMESPACE]: json };
 
-  if (!i18next.isInitialized) {
-    return;
-  }
+//   if (!i18next.isInitialized) {
+//     return;
+//   }
 
-  i18next.addResourceBundle(lang, DEFAULT_NAMESPACE, json, true, true);
-}
+//   i18next.addResourceBundle(lang, DEFAULT_NAMESPACE, json, true, true);
+// }
 
 export default i18next;

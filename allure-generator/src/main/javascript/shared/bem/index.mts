@@ -109,6 +109,6 @@ const createBemFormatter = (options: Partial<BemFormatterOptions> = {}): BemFunc
   return b;
 };
 
-export { BemFormatter as B };
+// export { BemFormatter as B };
 
 export default createBemFormatter();
