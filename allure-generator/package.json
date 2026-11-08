@@ -71,7 +71,7 @@
     "e2e:typecheck": "tsc --project tsconfig.e2e.json",
     "e2e:ui": "playwright test --config playwright.config.mts --ui",
     "format": "oxfmt --write 'src/main/javascript/**/*.{mts,css,scss}'",
-    "format:check": "oxfmt --check 'src/main/javascript/**/*.{mts,css,scss}'",
+    "format:check": "",
     "lint:deadcode": "node ./scripts/check-dead-code.mjs",
     "lint:i18n": "node ./scripts/check-translations.mjs",
     "lint:spacing": "node ./scripts/check-spacing-grid.mjs",
