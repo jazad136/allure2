@@ -1,0 +1,1 @@
+https://github.com/allure-framework/allure2/compare/main...AmrShaloudi:allure2-custom-history:main
