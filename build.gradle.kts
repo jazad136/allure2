@@ -114,7 +114,7 @@ subprojects {
     }
 
     dependencies {
-        add("testAnnotationProcessor", "io.qameta.allure:allure-descriptions-javadoc")
+        // add("testAnnotationProcessor", "io.qameta.allure:allure-descriptions-javadoc")
     }
 
     tasks.compileJava {
