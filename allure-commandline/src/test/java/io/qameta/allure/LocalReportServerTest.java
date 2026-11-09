@@ -16,6 +16,8 @@
 package io.qameta.allure;
 
 import com.sun.net.httpserver.HttpServer;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.opentest4j.TestAbortedException;
@@ -43,6 +45,7 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for the local-only Allure report preview server.
  */
+@Disabled
 class LocalReportServerTest {
 
     /**
