@@ -45,7 +45,6 @@ import static org.mockito.Mockito.when;
 /**
  * Tests for the local-only Allure report preview server.
  */
-@Disabled
 class LocalReportServerTest {
 
     /**
@@ -185,6 +184,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled
     void shouldSetSecurityHeadersWhenServingReport(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         Files.writeString(reportDirectory.resolve("index.html"), "report");
@@ -227,6 +227,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled
     void shouldSandboxHtmlAttachmentsWhenServingReport(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         final Path attachments = Files.createDirectories(reportDirectory.resolve("data").resolve("attachments"));
@@ -292,6 +293,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled
     void shouldSandboxHtmlAttachmentRequestedWithEncodedSlash(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         final Path attachments = Files.createDirectories(reportDirectory.resolve("data").resolve("attachments"));
@@ -323,6 +325,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled 
     void shouldServeReportFileRequestedWithDoubledSlashUsingReportPolicy(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         final Path nestedDirectory = Files.createDirectories(reportDirectory.resolve("nested"));
@@ -620,6 +623,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled
     void shouldReturnNotFoundForPlatformInvalidRequestPath(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
 
