@@ -626,24 +626,24 @@ class Allure1PluginTest {
     @Description
     @Test
     void shouldNotAllowAttachmentSourceSymbolicLink() throws IOException {
-        try { 
-	    	final Path allureResultsDir = directory.resolve("allure-results");
-	        Files.createDirectory(allureResultsDir);
-	
-	        copyFile(allureResultsDir, "allure1/text-attachment-link.xml", generateTestSuiteXmlName());
-	        copyFile(allureResultsDir, "allure1/secret-file.txt", "secret-file.txt");
-	
-	        Files.createSymbolicLink(allureResultsDir.resolve("link.txt"), allureResultsDir.resolve("secret-file.txt"));
-	
-	        final Allure1Plugin reader = new Allure1Plugin();
-	        final Configuration configuration = ConfigurationBuilder.bundled().build();
-	        final LaunchResults results = readResults(reader, configuration, allureResultsDir);
-	
-	        assertThat(results.getAttachments())
-	                .isEmpty();
-        } catch(FileSystemException e) { 
-        	// file system exception should be ok here. 
-        	return;
+        try {
+            final Path allureResultsDir = directory.resolve("allure-results");
+            Files.createDirectory(allureResultsDir);
+
+            copyFile(allureResultsDir, "allure1/text-attachment-link.xml", generateTestSuiteXmlName());
+            copyFile(allureResultsDir, "allure1/secret-file.txt", "secret-file.txt");
+
+            Files.createSymbolicLink(allureResultsDir.resolve("link.txt"), allureResultsDir.resolve("secret-file.txt"));
+
+            final Allure1Plugin reader = new Allure1Plugin();
+            final Configuration configuration = ConfigurationBuilder.bundled().build();
+            final LaunchResults results = readResults(reader, configuration, allureResultsDir);
+
+            assertThat(results.getAttachments())
+                    .isEmpty();
+        } catch (FileSystemException e) {
+            // file system exception should be ok here. 
+            return;
         }
 
     }

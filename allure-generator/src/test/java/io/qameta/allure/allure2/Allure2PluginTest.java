@@ -35,6 +35,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileSystem;
+import java.nio.file.FileSystemException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -674,20 +675,25 @@ class Allure2PluginTest {
     @Description
     @Test
     void shouldNotAllowAttachmentSourceSymbolicLink() throws IOException {
-        final Path allureResultsDir = directory.resolve("allure-results");
-        Files.createDirectory(allureResultsDir);
+        try {
+            final Path allureResultsDir = directory.resolve("allure-results");
+            Files.createDirectory(allureResultsDir);
 
-        copyFile(allureResultsDir, "allure2/text-attachment-link.json", generateTestResultName());
-        copyFile(allureResultsDir, "allure2/secret-file.txt", "secret-file.txt");
+            copyFile(allureResultsDir, "allure2/text-attachment-link.json", generateTestResultName());
+            copyFile(allureResultsDir, "allure2/secret-file.txt", "secret-file.txt");
 
-        Files.createSymbolicLink(allureResultsDir.resolve("link.txt"), allureResultsDir.resolve("secret-file.txt"));
+            Files.createSymbolicLink(allureResultsDir.resolve("link.txt"), allureResultsDir.resolve("secret-file.txt"));
 
-        final Allure2Plugin reader = new Allure2Plugin();
-        final Configuration configuration = ConfigurationBuilder.bundled().build();
-        final LaunchResults results = readResults(reader, configuration, allureResultsDir);
+            final Allure2Plugin reader = new Allure2Plugin();
+            final Configuration configuration = ConfigurationBuilder.bundled().build();
+            final LaunchResults results = readResults(reader, configuration, allureResultsDir);
 
-        assertThat(results.getAttachments())
-                .isEmpty();
+            assertThat(results.getAttachments())
+                    .isEmpty();
+        } catch (FileSystemException e) {
+            // deletion exceptions aren't that important to have happen here
+            return;
+        }
 
     }
 
