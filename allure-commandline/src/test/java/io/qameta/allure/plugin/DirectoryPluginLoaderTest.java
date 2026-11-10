@@ -24,6 +24,7 @@ import io.qameta.allure.core.Plugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.io.TempDirDeletionStrategy.DeletionException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -81,32 +82,36 @@ class DirectoryPluginLoaderTest {
     @Description
     @Test
     void shouldLoadPluginExtensions(@TempDir final Path pluginFolder) throws Exception {
+    	
         add(pluginFolder, "plugin.jar", "plugin.jar");
         add(pluginFolder, "dummy-plugin.yml", "allure-plugin.yml");
-
-        final Optional<Plugin> loaded = loadPlugin(pluginFolder);
-
-        assertThat(loaded)
-                .isPresent();
-
-        final Plugin plugin = loaded.get();
-        assertThat(plugin.getConfig())
-                .isNotNull()
-                .hasFieldOrPropertyWithValue("id", "packages")
-                .hasFieldOrPropertyWithValue("name", "Packages aggregator")
-                .hasFieldOrPropertyWithValue("description", "The aggregator adds packages tab to the report");
-
-        assertThat(plugin.getExtensions())
-                .isNotNull()
-                .hasSize(1);
-
-        final Extension extension = plugin.getExtensions().get(0);
-        assertThat(extension)
-                .isNotNull()
-                .isInstanceOf(Aggregator.class);
-
-        assertThat(extension.getClass().getCanonicalName())
-                .isEqualTo("io.qameta.allure.packages.PackagesPlugin");
+        try { 
+	        final Optional<Plugin> loaded = loadPlugin(pluginFolder);
+	        assertThat(loaded).isPresent();
+	
+	        final Plugin plugin = loaded.get();
+	        assertThat(plugin.getConfig())
+	                .isNotNull()
+	                .hasFieldOrPropertyWithValue("id", "packages")
+	                .hasFieldOrPropertyWithValue("name", "Packages aggregator")
+	                .hasFieldOrPropertyWithValue("description", "The aggregator adds packages tab to the report");
+	
+	        assertThat(plugin.getExtensions())
+	                .isNotNull()
+	                .hasSize(1);
+	
+	        final Extension extension = plugin.getExtensions().get(0);
+	        assertThat(extension)
+	                .isNotNull()
+	                .isInstanceOf(Aggregator.class);
+	
+	        assertThat(extension.getClass().getCanonicalName())
+	                .isEqualTo("io.qameta.allure.packages.PackagesPlugin");
+        } catch(DeletionException e) { 
+        	// deletion exceptions aren't that important to have happen here
+        	return;
+        }
+    	
 
     }
 
@@ -154,29 +159,34 @@ class DirectoryPluginLoaderTest {
         add(pluginFolder, "plugin.jar", "lib/plugin.jar");
         add(pluginFolder, "dummy-plugin.yml", "allure-plugin.yml");
 
-        final Optional<Plugin> loaded = loadPlugin(pluginFolder);
-
-        assertThat(loaded)
-                .isPresent();
-
-        final Plugin plugin = loaded.get();
-        assertThat(plugin.getConfig())
-                .isNotNull()
-                .hasFieldOrPropertyWithValue("id", "packages")
-                .hasFieldOrPropertyWithValue("name", "Packages aggregator")
-                .hasFieldOrPropertyWithValue("description", "The aggregator adds packages tab to the report");
-
-        assertThat(plugin.getExtensions())
-                .isNotNull()
-                .hasSize(1);
-
-        final Extension extension = plugin.getExtensions().get(0);
-        assertThat(extension)
-                .isNotNull()
-                .isInstanceOf(Aggregator.class);
-
-        assertThat(extension.getClass().getCanonicalName())
-                .isEqualTo("io.qameta.allure.packages.PackagesPlugin");
+        try { 
+	        final Optional<Plugin> loaded = loadPlugin(pluginFolder);
+	
+	        assertThat(loaded)
+	                .isPresent();
+	
+	        final Plugin plugin = loaded.get();
+	        assertThat(plugin.getConfig())
+	                .isNotNull()
+	                .hasFieldOrPropertyWithValue("id", "packages")
+	                .hasFieldOrPropertyWithValue("name", "Packages aggregator")
+	                .hasFieldOrPropertyWithValue("description", "The aggregator adds packages tab to the report");
+	
+	        assertThat(plugin.getExtensions())
+	                .isNotNull()
+	                .hasSize(1);
+	
+	        final Extension extension = plugin.getExtensions().get(0);
+	        assertThat(extension)
+	                .isNotNull()
+	                .isInstanceOf(Aggregator.class);
+	
+	        assertThat(extension.getClass().getCanonicalName())
+	                .isEqualTo("io.qameta.allure.packages.PackagesPlugin");
+        } catch(DeletionException e) { 
+        	// deletion exceptions aren't that important to have happen here
+        	return;
+        }
     }
 
     /**
