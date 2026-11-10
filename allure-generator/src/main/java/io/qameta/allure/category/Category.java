@@ -16,6 +16,7 @@
 package io.qameta.allure.category;
 
 import io.qameta.allure.entity.Status;
+import io.qameta.allure.model.Label;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -37,6 +38,7 @@ public class Category implements Serializable {
     protected String descriptionHtml;
     protected String messageRegex;
     protected String traceRegex;
+    protected String groupByLabel;
     protected List<Status> matchedStatuses = new ArrayList<>();
     protected Boolean flaky;
 
