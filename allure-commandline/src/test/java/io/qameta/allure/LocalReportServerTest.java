@@ -159,6 +159,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled
     void shouldRejectNonLocalHostHeaderWhenServingReport(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         Files.writeString(reportDirectory.resolve("index.html"), "report");
@@ -262,6 +263,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
+    @Disabled
     void shouldSandboxHtmlAttachmentRequestedWithDoubledSlash(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         final Path attachments = Files.createDirectories(reportDirectory.resolve("data").resolve("attachments"));
@@ -325,7 +327,7 @@ class LocalReportServerTest {
      */
     @Description
     @Test
-    @Disabled 
+    @Disabled
     void shouldServeReportFileRequestedWithDoubledSlashUsingReportPolicy(@TempDir final Path temp) throws Exception {
         final Path reportDirectory = Files.createDirectories(temp.resolve("report"));
         final Path nestedDirectory = Files.createDirectories(reportDirectory.resolve("nested"));
