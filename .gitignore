@@ -1,5 +1,9 @@
 #SADDLER
 bin/
+allure-commandline/allure-history
+allure-commandline/allure-report
+allure-history
+
 #IDEA Files
 .idea/*
 !.idea/vcs.xml
