@@ -16,7 +16,6 @@
 package io.qameta.allure.category;
 
 import io.qameta.allure.entity.Status;
-import io.qameta.allure.model.Label;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

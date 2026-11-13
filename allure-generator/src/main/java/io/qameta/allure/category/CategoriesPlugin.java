@@ -162,7 +162,7 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
     public static boolean matches(final TestResult result, final Category category) {
         final String cleanMessage = stripAnsi(result.getStatusMessage());
         final String cleanTrace = stripAnsi(result.getStatusTrace());
-        
+
         final boolean matchesStatus = category.getMatchedStatuses().isEmpty()
                 || nonNull(result.getStatus())
                         && category.getMatchedStatuses().contains(result.getStatus());
@@ -176,8 +176,8 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
                 || result.isFlaky() == category.getFlaky();
         // also find by group by label.
         final boolean matchesGroupBy = isNull(category.getGroupByLabel())
-        		|| !result.findAllLabels(category.getGroupByLabel()).isEmpty();
-        
+                || !result.findAllLabels(category.getGroupByLabel()).isEmpty();
+
         return matchesStatus && matchesMessage && matchesTrace && matchesFlaky && matchesGroupBy;
     }
 
