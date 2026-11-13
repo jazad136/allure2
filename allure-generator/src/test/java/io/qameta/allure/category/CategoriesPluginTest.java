@@ -23,6 +23,7 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.core.Configuration;
 import io.qameta.allure.core.InMemoryReportStorage;
 import io.qameta.allure.core.LaunchResults;
+import io.qameta.allure.entity.Label;
 import io.qameta.allure.entity.Status;
 import io.qameta.allure.entity.TestResult;
 import io.qameta.allure.entity.Time;
@@ -49,7 +50,6 @@ import static io.qameta.allure.category.CategoriesPlugin.CSV_FILE_NAME;
 import static io.qameta.allure.category.CategoriesPlugin.FAILED_TESTS;
 import static io.qameta.allure.category.CategoriesPlugin.JSON_FILE_NAME;
 import static io.qameta.allure.category.CategoriesPlugin.stripAnsi;
-import io.qameta.allure.entity.Label;
 import static io.qameta.allure.testdata.TestData.createSingleLaunchResults;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,66 +97,66 @@ class CategoriesPluginTest {
     @Description
     @Test
     void shouldSetNewCustomCategoriesToResults() {
-//    	final String categoryName = "Some category";
-    	final String categoryName = "Accounting Value Stream";
-    	Category category = new Category()
-    			.setName(categoryName)
-                        .setGroupByLabel("acctValueStream");
-    	
-    	Map<String, Object> meta = new HashMap<>();
-    	meta.put("categories", singletonList(category));
-    	
+        //    	final String categoryName = "Some category";
+        final String categoryName = "Accounting Value Stream";
+        Category category = new Category()
+                .setName(categoryName)
+                .setGroupByLabel("acctValueStream");
+
+        Map<String, Object> meta = new HashMap<>();
+        meta.put("categories", singletonList(category));
+
         Label myLabel = new Label();
         myLabel.setName("acctValueStream");
         myLabel.setValue("acquire-to-dispose");
         final TestResult first = new TestResult()
-    			.setName("first")
-    			.setStatus(Status.FAILED)
-    			.setStatusMessage("A")
-                        .setLabels(List.of(myLabel));
-    	
+                .setName("first")
+                .setStatus(Status.FAILED)
+                .setStatusMessage("A")
+                .setLabels(List.of(myLabel));
+
         myLabel = new Label();
         myLabel.setName("acctValueStream");
         myLabel.setValue("bill-to-collect");
-    	final TestResult second = new TestResult()
-    			.setName("second")
-    			.setStatus(Status.BROKEN)
-    			.setStatusMessage("B")
-                        .setLabels(List.of(myLabel));
+        final TestResult second = new TestResult()
+                .setName("second")
+                .setStatus(Status.BROKEN)
+                .setStatusMessage("B")
+                .setLabels(List.of(myLabel));
         myLabel = new Label();
         myLabel.setName("acctValueStream");
         myLabel.setValue("bill-to-collect");
         final TestResult third = new TestResult()
-                        .setName("third")
-                        .setStatus(Status.PASSED)
-                        .setStatusMessage("C")
-                        .setLabels(List.of(myLabel));
-        
-    	CategoriesPlugin.addCategoriesForResults(createSingleLaunchResults(meta, first, second, third));
-    	
-    	assertThat(first.getExtraBlock(CATEGORIES, new ArrayList<Category>()))
-    	.hasSize(1).satisfies(list -> {
-            assertThat(list).extracting(Category::getName)
-                    .containsExactlyInAnyOrder("Accounting Value Stream");
-            assertThat(list).extracting(Category::getGroupByLabel)
-                    .containsExactlyInAnyOrder("acctValueStream");
-        });
-    	
-    	assertThat(second.getExtraBlock(CATEGORIES, new ArrayList<Category>()))
-    	.hasSize(1).satisfies(list -> {
-            assertThat(list).extracting(Category::getName)
-                    .containsExactlyInAnyOrder("Accounting Value Stream");
-            assertThat(list).extracting(Category::getGroupByLabel)
-                    .containsExactlyInAnyOrder("acctValueStream");
-        });
-//        
-    	assertThat(third.getExtraBlock(CATEGORIES, new ArrayList<Category>()))
-    	.hasSize(1).satisfies(list -> {
-            assertThat(list).extracting(Category::getName)
-                    .containsExactlyInAnyOrder("Accounting Value Stream");
-            assertThat(list).extracting(Category::getGroupByLabel)
-                    .containsExactlyInAnyOrder("acctValueStream");
-        });
+                .setName("third")
+                .setStatus(Status.PASSED)
+                .setStatusMessage("C")
+                .setLabels(List.of(myLabel));
+
+        CategoriesPlugin.addCategoriesForResults(createSingleLaunchResults(meta, first, second, third));
+
+        assertThat(first.getExtraBlock(CATEGORIES, new ArrayList<Category>()))
+                .hasSize(1).satisfies(list -> {
+                    assertThat(list).extracting(Category::getName)
+                            .containsExactlyInAnyOrder("Accounting Value Stream");
+                    assertThat(list).extracting(Category::getGroupByLabel)
+                            .containsExactlyInAnyOrder("acctValueStream");
+                });
+
+        assertThat(second.getExtraBlock(CATEGORIES, new ArrayList<Category>()))
+                .hasSize(1).satisfies(list -> {
+                    assertThat(list).extracting(Category::getName)
+                            .containsExactlyInAnyOrder("Accounting Value Stream");
+                    assertThat(list).extracting(Category::getGroupByLabel)
+                            .containsExactlyInAnyOrder("acctValueStream");
+                });
+        //        
+        assertThat(third.getExtraBlock(CATEGORIES, new ArrayList<Category>()))
+                .hasSize(1).satisfies(list -> {
+                    assertThat(list).extracting(Category::getName)
+                            .containsExactlyInAnyOrder("Accounting Value Stream");
+                    assertThat(list).extracting(Category::getGroupByLabel)
+                            .containsExactlyInAnyOrder("acctValueStream");
+                });
     }
     /**
      * Verifies setting custom categories to results for category aggregation.
@@ -249,7 +249,39 @@ class CategoriesPluginTest {
         });
     }
 
-    
+    @Description
+    @Test
+    void shouldCreateTreeForNewCategories() {
+        CategoriesPluginTestHelper helper = new CategoriesPluginTestHelper();
+        TestResult first = helper.first; // acquire-to-dispose
+        TestResult second = helper.second; // bill-to-collect
+        TestResult third = helper.third; // acquire-to-dispose
+        TestResult other = helper.other; // budget-formulation-to-execution
+        first.addExtraBlock(CATEGORIES, singletonList(new Category().setName("C1")));
+        second.addExtraBlock(CATEGORIES, singletonList(new Category().setName("C2")));
+        third.addExtraBlock(CATEGORIES, singletonList(new Category().setName("C1")));
+        other.addExtraBlock(CATEGORIES, singletonList(new Category().setName("C3")));
+
+        final List<LaunchResults> launchResults = createSingleLaunchResults(first, second, third, other);
+        final Tree<TestResult> tree = CategoriesPlugin.getData(launchResults);
+        assertThat(tree.getChildren())
+                .hasSize(3)
+                .extracting(TreeNode::getName)
+                .containsExactlyInAnyOrder("C1", "C2", "C3");
+
+        assertThat(tree.getChildren())
+                .filteredOn("name", "C1")
+                .flatExtracting("children")
+                .extracting("name")
+                .containsExactlyInAnyOrder("A", "C");
+
+        assertThat(tree.getChildren())
+                .filteredOn("name", "C1")
+                .flatExtracting("children")
+                .flatExtracting("children")
+                .extracting("name")
+                .containsExactlyInAnyOrder("first", "third");
+    }
     /**
      * Verifies creating tree for category aggregation.
      */
