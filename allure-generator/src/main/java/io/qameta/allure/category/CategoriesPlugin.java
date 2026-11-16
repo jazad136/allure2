@@ -28,6 +28,7 @@ import io.qameta.allure.core.Configuration;
 import io.qameta.allure.core.LaunchResults;
 import io.qameta.allure.core.ResultsVisitor;
 import io.qameta.allure.csv.CsvExportCategory;
+import io.qameta.allure.entity.Label;
 import io.qameta.allure.entity.Status;
 import io.qameta.allure.entity.TestResult;
 import io.qameta.allure.tree.DefaultTreeLayer;
@@ -58,6 +59,7 @@ import static io.qameta.allure.entity.TestResult.comparingByTimeAsc;
 import static io.qameta.allure.tree.TreeUtils.calculateStatisticByLeafs;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
+import java.util.Optional;
 
 /**
  * Plugin that generates data for Categories tab.
@@ -67,11 +69,11 @@ import static java.util.Objects.nonNull;
 public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
 
     public static final String CATEGORIES = "categories";
+    public static final String LABELS = "labels";
 
     public static final Category FAILED_TESTS = new Category().setName("Product defects");
-
     public static final Category BROKEN_TESTS = new Category().setName("Test defects");
-
+    
     public static final String JSON_FILE_NAME = "categories.json";
 
     public static final String CSV_FILE_NAME = "categories.csv";
@@ -118,7 +120,22 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
                 .forEach(categories::add);
         return categories;
     }
-
+    static void addCategoriesForResultsAndResultLabels(final List<LaunchResults> launchesResults) { 
+        launchesResults.forEach(launch -> {
+            final List<Category> categories = launch.getExtra(CATEGORIES, Collections::emptyList);
+            
+            launch.getResults().forEach(result -> {
+                final List<Category> resultCategories = result.getExtraBlock(CATEGORIES, new ArrayList<>());
+                categories.stream()
+                        .filter(category -> matches(result, category))
+                        .findFirst()
+                        .ifPresent(resultCategories::add);
+                if (resultCategories.isEmpty()) {
+                    addDefaultLabelCategories(result, resultCategories);
+                }
+            });
+        });
+    }
     /* default */ static void addCategoriesForResults(final List<LaunchResults> launchesResults) {
         launchesResults.forEach(launch -> {
             final List<Category> categories = launch.getExtra(CATEGORIES, Collections::emptyList);
@@ -135,6 +152,16 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
         });
     }
 
+    private static void addDefaultLabelCategories(final TestResult result, final List<Category> categories) {
+        for(Label label : result.getLabels()) { 
+            if("acctValueStream".equalsIgnoreCase(label.getName())) { 
+                categories.add(new Category().setName("acctValueStream")
+                        .setGroupByLabel("acctValueStream")
+                        .setGroupByLabelValue(label.getValue()));
+            }
+        }
+        // skip the Product defects and Test defects categories
+    }
     private static void addDefaultCategory(final TestResult result, final List<Category> categories) {
         if (Status.FAILED.equals(result.getStatus())) {
             categories.add(FAILED_TESTS);
@@ -151,10 +178,20 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
                 .map(Category::getName)
                 .collect(Collectors.toSet());
         final TreeLayer categoriesLayer = new DefaultTreeLayer(categories);
-        final TreeLayer messageLayer = new DefaultTreeLayer(testResult.getStatusMessage());
+        final TreeLayer messageLayer = new DefaultTreeLayer(getValueStreamCategoryHeader(testResult));
+        
         return Arrays.asList(categoriesLayer, messageLayer);
     }
 
+    static String getValueStreamCategoryHeader(TestResult testResult) { 
+        Optional<Label> vStreamLabel = testResult.getLabels().stream()
+                .filter(lbl -> "acctValueStream".equals(lbl.getName()))
+                .findFirst();
+        if(vStreamLabel.isPresent())
+            return vStreamLabel.get().getValue();
+        else
+            return "No Accounting Value Stream";
+    }
     static String stripAnsi(final String input) {
         return input == null ? null : input.replaceAll("\u001B\\[[0-9;]*[a-zA-Z]", "");
     }
@@ -176,11 +213,24 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
                 || result.isFlaky() == category.getFlaky();
         // also find by group by label.
         final boolean matchesGroupBy = isNull(category.getGroupByLabel())
-                || !result.findAllLabels(category.getGroupByLabel()).isEmpty();
+                || matchesOneOf(result.getLabels(), category.getGroupByLabel(), category.getGroupByLabelValue());
 
         return matchesStatus && matchesMessage && matchesTrace && matchesFlaky && matchesGroupBy;
     }
 
+    private static boolean matchesOneOf(final List<Label> labels, final String labelPattern, final String labelValuePattern) { 
+        if(labelPattern != null && labelValuePattern != null) {
+            for(Label label : labels) {
+                String labelName = label.getName();
+                String labelValue = label.getValue();
+                if(Pattern.compile(labelPattern, Pattern.DOTALL).matcher(labelName).matches()
+                && Pattern.compile(labelValuePattern, Pattern.DOTALL).matcher(labelValue).matches())
+                    return true;
+            }
+        }
+        
+        return false;
+    }
     private static boolean matches(final String message, final String pattern) {
         return Pattern.compile(pattern, Pattern.DOTALL).matcher(message).matches();
     }
@@ -201,7 +251,7 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
         public void aggregate(final Configuration configuration,
                               final List<LaunchResults> launchesResults,
                               final ReportStorage storage) {
-            addCategoriesForResults(launchesResults);
+            addCategoriesForResultsAndResultLabels(launchesResults);
         }
     }
 

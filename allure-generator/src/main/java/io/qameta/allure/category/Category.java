@@ -38,6 +38,8 @@ public class Category implements Serializable {
     protected String messageRegex;
     protected String traceRegex;
     protected String groupByLabel;
+    protected String groupByLabelValue;
+    protected List<String> groupByLabels;
     protected List<Status> matchedStatuses = new ArrayList<>();
     protected Boolean flaky;
 
