@@ -155,7 +155,7 @@ public class CategoriesPlugin extends CompositeAggregator2 implements Reader {
     private static void addDefaultLabelCategories(final TestResult result, final List<Category> categories) {
         for(Label label : result.getLabels()) { 
             if("acctValueStream".equalsIgnoreCase(label.getName())) { 
-                categories.add(new Category().setName("acctValueStream")
+                categories.add(new Category().setName("By Accounting Value Stream")
                         .setGroupByLabel("acctValueStream")
                         .setGroupByLabelValue(label.getValue()));
             }
