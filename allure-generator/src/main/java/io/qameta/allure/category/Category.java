@@ -31,6 +31,7 @@ public class Category implements Serializable {
     protected String descriptionHtml;
     protected String messageRegex;
     protected String traceRegex;
+    protected String groupByLabel;
     protected List<Status> matchedStatuses = new ArrayList<>();
     protected Boolean flaky;
 
