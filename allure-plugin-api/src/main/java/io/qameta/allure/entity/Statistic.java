@@ -17,8 +17,6 @@ package io.qameta.allure.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -27,12 +25,8 @@ import java.util.Objects;
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class Statistic implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected long failed;
     protected long broken;
     protected long skipped;
@@ -122,10 +116,73 @@ public class Statistic implements Serializable {
     }
 
     public static Comparator<Statistic> comparator() {
-        return Comparator.comparing(Statistic::getFailed)
-                .thenComparing(Statistic::getBroken)
-                .thenComparing(Statistic::getPassed)
-                .thenComparing(Statistic::getSkipped)
+        return Comparator.comparing(Statistic::getFailed).thenComparing(Statistic::getBroken).thenComparing(Statistic::getPassed).thenComparing(Statistic::getSkipped)
                 .thenComparing(Statistic::getUnknown);
+    }
+
+    public long getFailed() {
+        return this.failed;
+    }
+
+    public long getBroken() {
+        return this.broken;
+    }
+
+    public long getSkipped() {
+        return this.skipped;
+    }
+
+    public long getPassed() {
+        return this.passed;
+    }
+
+    public long getUnknown() {
+        return this.unknown;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Statistic setFailed(final long failed) {
+        this.failed = failed;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Statistic setBroken(final long broken) {
+        this.broken = broken;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Statistic setSkipped(final long skipped) {
+        this.skipped = skipped;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Statistic setPassed(final long passed) {
+        this.passed = passed;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Statistic setUnknown(final long unknown) {
+        this.unknown = unknown;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Statistic(failed=" + this.getFailed() + ", broken=" + this.getBroken() + ", skipped=" + this.getSkipped() + ", passed=" + this.getPassed() + ", unknown="
+                + this.getUnknown() + ")";
     }
 }

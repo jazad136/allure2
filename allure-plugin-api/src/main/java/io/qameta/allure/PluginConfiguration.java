@@ -15,9 +15,6 @@
  */
 package io.qameta.allure;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +22,8 @@ import java.util.List;
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class PluginConfiguration implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     private String id;
     private String name;
     private String description;
@@ -38,4 +31,81 @@ public class PluginConfiguration implements Serializable {
     private List<String> jsFiles = new ArrayList<>();
     private List<String> cssFiles = new ArrayList<>();
 
+    public String getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public List<String> getExtensions() {
+        return this.extensions;
+    }
+
+    public List<String> getJsFiles() {
+        return this.jsFiles;
+    }
+
+    public List<String> getCssFiles() {
+        return this.cssFiles;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public PluginConfiguration setId(final String id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public PluginConfiguration setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public PluginConfiguration setDescription(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public PluginConfiguration setExtensions(final List<String> extensions) {
+        this.extensions = extensions;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public PluginConfiguration setJsFiles(final List<String> jsFiles) {
+        this.jsFiles = jsFiles;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public PluginConfiguration setCssFiles(final List<String> cssFiles) {
+        this.cssFiles = cssFiles;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "PluginConfiguration(id=" + this.getId() + ", name=" + this.getName() + ", description=" + this.getDescription() + ", extensions=" + this.getExtensions()
+                + ", jsFiles=" + this.getJsFiles() + ", cssFiles=" + this.getCssFiles() + ")";
+    }
 }

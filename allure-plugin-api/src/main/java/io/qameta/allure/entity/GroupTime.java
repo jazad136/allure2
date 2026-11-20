@@ -15,9 +15,6 @@
  */
 package io.qameta.allure.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -29,12 +26,8 @@ import static java.lang.Long.MAX_VALUE;
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class GroupTime implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected Long start;
     protected Long stop;
     protected Long duration;
@@ -73,10 +66,87 @@ public class GroupTime implements Serializable {
         update(firstNonNull(getSumDuration(), 0L), time.getDuration(), (a, b) -> a + b, this::setSumDuration);
     }
 
-    protected static <T> void update(final T first, final T second,
-                                     final BiFunction<T, T, T> merge, final Consumer<T> setter) {
+    protected static <T> void update(final T first, final T second, final BiFunction<T, T, T> merge, final Consumer<T> setter) {
         if (Objects.nonNull(first) && Objects.nonNull(second)) {
             setter.accept(merge.apply(first, second));
         }
+    }
+
+    public Long getStart() {
+        return this.start;
+    }
+
+    public Long getStop() {
+        return this.stop;
+    }
+
+    public Long getDuration() {
+        return this.duration;
+    }
+
+    public Long getMinDuration() {
+        return this.minDuration;
+    }
+
+    public Long getMaxDuration() {
+        return this.maxDuration;
+    }
+
+    public Long getSumDuration() {
+        return this.sumDuration;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GroupTime setStart(final Long start) {
+        this.start = start;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GroupTime setStop(final Long stop) {
+        this.stop = stop;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GroupTime setDuration(final Long duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GroupTime setMinDuration(final Long minDuration) {
+        this.minDuration = minDuration;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GroupTime setMaxDuration(final Long maxDuration) {
+        this.maxDuration = maxDuration;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GroupTime setSumDuration(final Long sumDuration) {
+        this.sumDuration = sumDuration;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupTime(start=" + this.getStart() + ", stop=" + this.getStop() + ", duration=" + this.getDuration() + ", minDuration=" + this.getMinDuration() + ", maxDuration="
+                + this.getMaxDuration() + ", sumDuration=" + this.getSumDuration() + ")";
     }
 }

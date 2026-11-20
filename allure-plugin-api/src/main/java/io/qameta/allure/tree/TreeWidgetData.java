@@ -15,9 +15,6 @@
  */
 package io.qameta.allure.tree;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +22,37 @@ import java.util.List;
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class TreeWidgetData implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected long total;
     protected List<TreeWidgetItem> items = new ArrayList<>();
 
+    public long getTotal() {
+        return this.total;
+    }
+
+    public List<TreeWidgetItem> getItems() {
+        return this.items;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TreeWidgetData setTotal(final long total) {
+        this.total = total;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TreeWidgetData setItems(final List<TreeWidgetItem> items) {
+        this.items = items;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "TreeWidgetData(total=" + this.getTotal() + ", items=" + this.getItems() + ")";
+    }
 }

@@ -15,18 +15,12 @@
  */
 package io.qameta.allure.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class Attachment implements Serializable {
-
     private static final long serialVersionUID = 1L;
     protected String uid;
     protected String name;
@@ -34,4 +28,68 @@ public class Attachment implements Serializable {
     protected String type;
     protected Long size;
 
+    public String getUid() {
+        return this.uid;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getSource() {
+        return this.source;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public Long getSize() {
+        return this.size;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Attachment setUid(final String uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Attachment setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Attachment setSource(final String source) {
+        this.source = source;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Attachment setType(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Attachment setSize(final Long size) {
+        this.size = size;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Attachment(uid=" + this.getUid() + ", name=" + this.getName() + ", source=" + this.getSource() + ", type=" + this.getType() + ", size=" + this.getSize() + ")";
+    }
 }

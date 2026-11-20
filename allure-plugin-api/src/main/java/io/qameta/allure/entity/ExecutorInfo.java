@@ -15,20 +15,13 @@
  */
 package io.qameta.allure.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class ExecutorInfo implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected String name;
     protected String type;
     protected String url;
@@ -38,4 +31,104 @@ public class ExecutorInfo implements Serializable {
     protected String reportName;
     protected String reportUrl;
 
+    public String getName() {
+        return this.name;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public Long getBuildOrder() {
+        return this.buildOrder;
+    }
+
+    public String getBuildName() {
+        return this.buildName;
+    }
+
+    public String getBuildUrl() {
+        return this.buildUrl;
+    }
+
+    public String getReportName() {
+        return this.reportName;
+    }
+
+    public String getReportUrl() {
+        return this.reportUrl;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setType(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setUrl(final String url) {
+        this.url = url;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setBuildOrder(final Long buildOrder) {
+        this.buildOrder = buildOrder;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setBuildName(final String buildName) {
+        this.buildName = buildName;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setBuildUrl(final String buildUrl) {
+        this.buildUrl = buildUrl;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setReportName(final String reportName) {
+        this.reportName = reportName;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ExecutorInfo setReportUrl(final String reportUrl) {
+        this.reportUrl = reportUrl;
+        return this;
+    }
+    @Override
+    public String toString() {
+        return "ExecutorInfo(name=" + this.getName() + ", type=" + this.getType() + ", url=" + this.getUrl() + ", buildOrder=" + this.getBuildOrder() + ", buildName="
+                + this.getBuildName() + ", buildUrl=" + this.getBuildUrl() + ", reportName=" + this.getReportName() + ", reportUrl=" + this.getReportUrl() + ")";
+    }
 }

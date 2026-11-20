@@ -15,24 +15,81 @@
  */
 package io.qameta.allure.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
  * Describes an error that belongs to the entire test run rather than to a test result.
  */
-@Data
-@Accessors(chain = true)
 public class GlobalError implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected Long timestamp;
     protected String message;
     protected String trace;
     protected String actual;
     protected String expected;
 
+    public Long getTimestamp() {
+        return this.timestamp;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public String getTrace() {
+        return this.trace;
+    }
+
+    public String getActual() {
+        return this.actual;
+    }
+
+    public String getExpected() {
+        return this.expected;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GlobalError setTimestamp(final Long timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GlobalError setMessage(final String message) {
+        this.message = message;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GlobalError setTrace(final String trace) {
+        this.trace = trace;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GlobalError setActual(final String actual) {
+        this.actual = actual;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GlobalError setExpected(final String expected) {
+        this.expected = expected;
+        return this;
+    }
+    @Override
+    public String toString() {
+        return "GlobalError(timestamp=" + this.getTimestamp() + ", message=" + this.getMessage() + ", trace=" + this.getTrace() + ", actual=" + this.getActual() + ", expected="
+                + this.getExpected() + ")";
+    }
 }
