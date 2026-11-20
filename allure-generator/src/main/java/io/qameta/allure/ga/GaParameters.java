@@ -15,30 +15,107 @@
  */
 package io.qameta.allure.ga;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 /**
  * Parameters for {@link GaPlugin}.
  *
  * @author eroshnkoam
  */
-@Data
-@Accessors(chain = true)
 public class GaParameters {
-
     private String reportUuid;
-
     private String allureVersion;
-
     private String executorType;
-
     private String language;
-
     private String framework;
-
     private long resultsCount;
-
     private String resultsFormat;
 
+    public String getReportUuid() {
+        return this.reportUuid;
+    }
+
+    public String getAllureVersion() {
+        return this.allureVersion;
+    }
+
+    public String getExecutorType() {
+        return this.executorType;
+    }
+
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public String getFramework() {
+        return this.framework;
+    }
+
+    public long getResultsCount() {
+        return this.resultsCount;
+    }
+
+    public String getResultsFormat() {
+        return this.resultsFormat;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setReportUuid(final String reportUuid) {
+        this.reportUuid = reportUuid;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setAllureVersion(final String allureVersion) {
+        this.allureVersion = allureVersion;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setExecutorType(final String executorType) {
+        this.executorType = executorType;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setLanguage(final String language) {
+        this.language = language;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setFramework(final String framework) {
+        this.framework = framework;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setResultsCount(final long resultsCount) {
+        this.resultsCount = resultsCount;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public GaParameters setResultsFormat(final String resultsFormat) {
+        this.resultsFormat = resultsFormat;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "GaParameters(reportUuid=" + this.getReportUuid() + ", allureVersion=" + this.getAllureVersion() + ", executorType=" + this.getExecutorType() + ", language="
+                + this.getLanguage() + ", framework=" + this.getFramework() + ", resultsCount=" + this.getResultsCount() + ", resultsFormat=" + this.getResultsFormat() + ")";
+    }
 }

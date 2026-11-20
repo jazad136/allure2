@@ -16,8 +16,6 @@
 package io.qameta.allure.category;
 
 import io.qameta.allure.entity.Status;
-import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,12 +24,8 @@ import java.util.List;
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class Category implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected String name;
     protected String description;
     protected String descriptionHtml;
@@ -43,4 +37,93 @@ public class Category implements Serializable {
     protected List<Status> matchedStatuses = new ArrayList<>();
     protected Boolean flaky;
 
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getDescriptionHtml() {
+        return this.descriptionHtml;
+    }
+
+    public String getMessageRegex() {
+        return this.messageRegex;
+    }
+
+    public String getTraceRegex() {
+        return this.traceRegex;
+    }
+
+    public List<Status> getMatchedStatuses() {
+        return this.matchedStatuses;
+    }
+
+    public Boolean getFlaky() {
+        return this.flaky;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setDescription(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setDescriptionHtml(final String descriptionHtml) {
+        this.descriptionHtml = descriptionHtml;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setMessageRegex(final String messageRegex) {
+        this.messageRegex = messageRegex;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setTraceRegex(final String traceRegex) {
+        this.traceRegex = traceRegex;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setMatchedStatuses(final List<Status> matchedStatuses) {
+        this.matchedStatuses = matchedStatuses;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Category setFlaky(final Boolean flaky) {
+        this.flaky = flaky;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Category(name=" + this.getName() + ", description=" + this.getDescription() + ", descriptionHtml=" + this.getDescriptionHtml() + ", messageRegex="
+                + this.getMessageRegex() + ", traceRegex=" + this.getTraceRegex() + ", matchedStatuses=" + this.getMatchedStatuses() + ", flaky=" + this.getFlaky() + ")";
+    }
 }

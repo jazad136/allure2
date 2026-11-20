@@ -15,10 +15,6 @@
  */
 package io.qameta.allure.trend;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,19 +25,11 @@ import java.util.Optional;
  *
  * @author eroshenkoam
  */
-@Getter
-@Setter
-@Accessors(chain = true)
 public class TrendItem implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected Long buildOrder;
-
     protected String reportUrl;
-
     protected String reportName;
-
     protected Map<String, Long> data = new HashMap<>();
 
     protected void increaseMetric(final String metric) {
@@ -53,4 +41,51 @@ public class TrendItem implements Serializable {
         this.data.put(metric, value);
     }
 
+    public Long getBuildOrder() {
+        return this.buildOrder;
+    }
+
+    public String getReportUrl() {
+        return this.reportUrl;
+    }
+
+    public String getReportName() {
+        return this.reportName;
+    }
+
+    public Map<String, Long> getData() {
+        return this.data;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TrendItem setBuildOrder(final Long buildOrder) {
+        this.buildOrder = buildOrder;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TrendItem setReportUrl(final String reportUrl) {
+        this.reportUrl = reportUrl;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TrendItem setReportName(final String reportName) {
+        this.reportName = reportName;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TrendItem setData(final Map<String, Long> data) {
+        this.data = data;
+        return this;
+    }
 }
