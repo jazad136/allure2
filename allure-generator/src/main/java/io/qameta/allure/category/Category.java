@@ -32,6 +32,7 @@ public class Category implements Serializable {
     protected String messageRegex;
     protected String traceRegex;
     protected String groupByLabel;
+    protected String groupByLabelValue;
     protected List<Status> matchedStatuses = new ArrayList<>();
     protected Boolean flaky;
 
@@ -61,6 +62,13 @@ public class Category implements Serializable {
 
     public Boolean getFlaky() {
         return this.flaky;
+    }
+    public String getGroupByLabel() { 
+        return this.groupByLabel;
+    }
+    
+    public String getGroupByLabelValue() { 
+        return this.groupByLabelValue;
     }
 
     /**
@@ -119,6 +127,14 @@ public class Category implements Serializable {
         return this;
     }
 
+    public Category setGroupByLabel(String groupByLabel) { 
+        this.groupByLabel = groupByLabel;
+        return this;
+    }
+    public Category setGroupByLabelValue(String groupByLabelValue) { 
+        this.groupByLabelValue = groupByLabelValue;
+        return this;
+    }
     @Override
     public String toString() {
         return "Category(name=" + this.getName() + ", description=" + this.getDescription() + ", descriptionHtml=" + this.getDescriptionHtml() + ", messageRegex="
