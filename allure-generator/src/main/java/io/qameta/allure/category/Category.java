@@ -32,7 +32,7 @@ public class Category implements Serializable {
     protected String messageRegex;
     protected String traceRegex;
     protected String groupByLabel;
-    protected String groupByLabelValue;
+    protected List<String> groupByLabelValue;
     protected List<Status> matchedStatuses = new ArrayList<>();
     protected Boolean flaky;
 
@@ -67,7 +67,7 @@ public class Category implements Serializable {
         return this.groupByLabel;
     }
     
-    public String getGroupByLabelValue() { 
+    public List<String> getGroupByLabelValue() { 
         return this.groupByLabelValue;
     }
 
@@ -131,7 +131,7 @@ public class Category implements Serializable {
         this.groupByLabel = groupByLabel;
         return this;
     }
-    public Category setGroupByLabelValue(String groupByLabelValue) { 
+    public Category setGroupByLabelValue(List<String> groupByLabelValue) { 
         this.groupByLabelValue = groupByLabelValue;
         return this;
     }
