@@ -15,9 +15,6 @@
  */
 package io.qameta.allure.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +22,37 @@ import java.util.List;
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class EnvironmentItem implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected List<String> values = new ArrayList<>();
     protected String name;
 
+    public List<String> getValues() {
+        return this.values;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public EnvironmentItem setValues(final List<String> values) {
+        this.values = values;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public EnvironmentItem setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "EnvironmentItem(values=" + this.getValues() + ", name=" + this.getName() + ")";
+    }
 }

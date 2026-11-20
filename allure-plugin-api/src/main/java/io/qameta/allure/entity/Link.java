@@ -15,22 +15,55 @@
  */
 package io.qameta.allure.entity;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class Link implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected String name;
     protected String url;
     protected String type;
 
+    public String getName() {
+        return this.name;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Link setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Link setUrl(final String url) {
+        this.url = url;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public Link setType(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Link(name=" + this.getName() + ", url=" + this.getUrl() + ", type=" + this.getType() + ")";
+    }
 }

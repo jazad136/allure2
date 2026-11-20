@@ -16,22 +16,56 @@
 package io.qameta.allure.tree;
 
 import io.qameta.allure.entity.Statistic;
-import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class TreeWidgetItem implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     protected String uid;
     protected String name;
     protected Statistic statistic;
 
+    public String getUid() {
+        return this.uid;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Statistic getStatistic() {
+        return this.statistic;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TreeWidgetItem setUid(final String uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TreeWidgetItem setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public TreeWidgetItem setStatistic(final Statistic statistic) {
+        this.statistic = statistic;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "TreeWidgetItem(uid=" + this.getUid() + ", name=" + this.getName() + ", statistic=" + this.getStatistic() + ")";
+    }
 }

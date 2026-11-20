@@ -15,21 +15,42 @@
  */
 package io.qameta.allure;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
  * @author charlie (Dmitry Baev).
  */
-@Data
-@Accessors(chain = true)
 public class ReportInfo implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     private String allureVersion;
     private String reportUuid;
 
+    public String getAllureVersion() {
+        return this.allureVersion;
+    }
+
+    public String getReportUuid() {
+        return this.reportUuid;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportInfo setAllureVersion(final String allureVersion) {
+        this.allureVersion = allureVersion;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportInfo setReportUuid(final String reportUuid) {
+        this.reportUuid = reportUuid;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ReportInfo(allureVersion=" + this.getAllureVersion() + ", reportUuid=" + this.getReportUuid() + ")";
+    }
 }
