@@ -21,8 +21,6 @@ import io.qameta.allure.entity.Statistic;
 import io.qameta.allure.entity.Status;
 import io.qameta.allure.entity.TestResult;
 import io.qameta.allure.entity.Time;
-import lombok.Data;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -35,12 +33,9 @@ import java.util.stream.Collectors;
 /**
  * Report-level summary shared with Allure 3 CI integrations.
  */
-@Data
-@Accessors(chain = true)
 public class ReportSummary implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     protected String name;
     protected Statistic stats;
     protected Status status;
@@ -49,23 +44,13 @@ public class ReportSummary implements Serializable {
     protected String plugin = "Allure2";
     protected Map<String, Object> meta = new HashMap<>();
 
-    public static ReportSummary create(final Configuration configuration,
-                                       final List<LaunchResults> launches,
-                                       final boolean singleFile) {
+    public static ReportSummary create(final Configuration configuration, final List<LaunchResults> launches, final boolean singleFile) {
         final SummaryData widget = SummaryPlugin.getData(configuration, launches);
         final Statistic stats = widget.getStatistic();
-        final ReportSummary summary = new ReportSummary()
-                .setName(widget.getReportName())
-                .setStats(stats)
-                .setStatus(stats.getTotal() == 0 ? Status.PASSED : stats.getStatus());
+        final ReportSummary summary = new ReportSummary().setName(widget.getReportName()).setStats(stats).setStatus(stats.getTotal() == 0 ? Status.PASSED : stats.getStatus());
         summary.getMeta().put("reportId", configuration.getUuid());
         summary.getMeta().put("singleFile", singleFile);
-
-        final List<Time> times = launches.stream()
-                .map(LaunchResults::getResults)
-                .flatMap(Collection::stream)
-                .map(TestResult::getTime)
-                .filter(Objects::nonNull)
+        final List<Time> times = launches.stream().map(LaunchResults::getResults).flatMap(Collection::stream).map(TestResult::getTime).filter(Objects::nonNull)
                 .collect(Collectors.toList());
         summary.updateTime(times);
         return summary;
@@ -90,5 +75,95 @@ public class ReportSummary implements Serializable {
             }
         }
         duration = hasTimestamps ? Math.max(0, stop - start) : sumDuration;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Statistic getStats() {
+        return this.stats;
+    }
+
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public long getDuration() {
+        return this.duration;
+    }
+
+    public long getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public String getPlugin() {
+        return this.plugin;
+    }
+
+    public Map<String, Object> getMeta() {
+        return this.meta;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setName(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setStats(final Statistic stats) {
+        this.stats = stats;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setStatus(final Status status) {
+        this.status = status;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setDuration(final long duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setCreatedAt(final long createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setPlugin(final String plugin) {
+        this.plugin = plugin;
+        return this;
+    }
+
+    /**
+     * @return {@code this}.
+     */
+    public ReportSummary setMeta(final Map<String, Object> meta) {
+        this.meta = meta;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ReportSummary(name=" + this.getName() + ", stats=" + this.getStats() + ", status=" + this.getStatus() + ", duration=" + this.getDuration() + ", createdAt="
+                + this.getCreatedAt() + ", plugin=" + this.getPlugin() + ", meta=" + this.getMeta() + ")";
     }
 }
